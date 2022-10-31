@@ -1,0 +1,44 @@
+h1 {
+font-size: 24px;
+font-family: "Meiryo";
+}
+
+h2 {
+font-size: 20px;
+font-family: "Meiryo";
+}
+
+h3 {
+font-size: 18px;
+font-family: "Meiryo";
+}
+
+h4 {
+font-size: 16px;
+font-family: "Meiryo";
+}
+
+p {
+font-size: 15px;
+font-family: "Meiryo";
+}
+
+ul {
+font-size: 13.5px;
+font-family: "Meiryo";
+}
+
+ol {
+font-size: 13.5px;
+font-family: "Meiryo";
+}
+
+li {
+font-size: 13.5px;
+font-family: "Meiryo";
+}
+
+.math{
+font-size: 11px;
+line-height: 14px;
+}
