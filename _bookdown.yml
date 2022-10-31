@@ -6,7 +6,6 @@ rmd_files:
   - Chapter2.Rmd  
   - Chapter3.Rmd
   - Chapter4.Rmd  
-  - References.Rmd  
   - sessioninfo.Rmd
 language:
   label:
