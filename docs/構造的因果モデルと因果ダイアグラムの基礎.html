@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2. 構造的因果モデルと因果ダイアグラムの基礎 | Causal Inference Using R</title>
+  <meta name="description" content="2. 構造的因果モデルと因果ダイアグラムの基礎 | Causal Inference Using R" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2. 構造的因果モデルと因果ダイアグラムの基礎 | Causal Inference Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2. 構造的因果モデルと因果ダイアグラムの基礎 | Causal Inference Using R" />
+  
+  
+  
+
+<meta name="author" content="yamaguchi" />
+
+
+<meta name="date" content="2022-10-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="なぜ統計的因果推論が必要か.html"/>
+<link rel="next" href="因果ダイアグラムの因果推論への応用.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="custom_style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>本稿の目的</a></li>
+<li class="chapter" data-level="" data-path="パッケージの読み込み.html"><a href="パッケージの読み込み.html"><i class="fa fa-check"></i>0. パッケージの読み込み</a></li>
+<li class="chapter" data-level="" data-path="なぜ統計的因果推論が必要か.html"><a href="なぜ統計的因果推論が必要か.html"><i class="fa fa-check"></i>1 なぜ統計的因果推論が必要か</a></li>
+<li class="chapter" data-level="" data-path="構造的因果モデルと因果ダイアグラムの基礎.html"><a href="構造的因果モデルと因果ダイアグラムの基礎.html"><i class="fa fa-check"></i>2. 構造的因果モデルと因果ダイアグラムの基礎</a>
+<ul>
+<li class="chapter" data-level="" data-path="構造的因果モデルと因果ダイアグラムの基礎.html"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#構造的因果モデルscm"><i class="fa fa-check"></i>2.1 構造的因果モデル(SCM)</a></li>
+<li class="chapter" data-level="" data-path="構造的因果モデルと因果ダイアグラムの基礎.html"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#因果ダイアグラムの概要"><i class="fa fa-check"></i>2.2 因果ダイアグラムの概要</a></li>
+<li class="chapter" data-level="" data-path="構造的因果モデルと因果ダイアグラムの基礎.html"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#因果ダイアグラムの描き方"><i class="fa fa-check"></i>2.3 因果ダイアグラムの描き方</a></li>
+<li class="chapter" data-level="" data-path="構造的因果モデルと因果ダイアグラムの基礎.html"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#因果ダイアグラムの基礎"><i class="fa fa-check"></i>2.4 因果ダイアグラムの基礎</a></li>
+<li class="chapter" data-level="" data-path="構造的因果モデルと因果ダイアグラムの基礎.html"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#独立と従属"><i class="fa fa-check"></i>2.5 独立と従属</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html"><i class="fa fa-check"></i>3. 因果ダイアグラムの因果推論への応用</a>
+<ul>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#因果ダイアグラムの基本3パターン"><i class="fa fa-check"></i>3.1 因果ダイアグラムの基本3パターン</a></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#連鎖経路chain"><i class="fa fa-check"></i>3.1.1 連鎖経路(chain)</a>
+<ul>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#概要"><i class="fa fa-check"></i>3.1.1.1 概要</a></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#連鎖経路の例"><i class="fa fa-check"></i>3.1.1.2 連鎖経路の例</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#分岐経路fork"><i class="fa fa-check"></i>3.1.2 分岐経路(fork)</a>
+<ul>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#概要-1"><i class="fa fa-check"></i>3.1.2.1 概要</a></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#分岐経路の例"><i class="fa fa-check"></i>3.1.2.2 分岐経路の例</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#合流点collider"><i class="fa fa-check"></i>3.1.3 合流点(collider)</a>
+<ul>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#概要-2"><i class="fa fa-check"></i>3.1.3.1 概要</a></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#合流点の例1"><i class="fa fa-check"></i>3.1.3.2 合流点の例1</a></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#合流点の例2"><i class="fa fa-check"></i>3.1.3.3 合流点の例2</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#d分離性d-separation"><i class="fa fa-check"></i>3.2 d分離性(d-separation)</a></li>
+<li class="chapter" data-level="" data-path="因果ダイアグラムの因果推論への応用.html"><a href="因果ダイアグラムの因果推論への応用.html#モデル検定と因果探索"><i class="fa fa-check"></i>3.3 モデル検定と因果探索</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="介入効果の推定.html"><a href="介入効果の推定.html"><i class="fa fa-check"></i>4. 介入効果の推定</a>
+<ul>
+<li class="chapter" data-level="" data-path="介入効果の推定.html"><a href="介入効果の推定.html#介入とは"><i class="fa fa-check"></i>4.1 介入とは</a></li>
+<li class="chapter" data-level="" data-path="介入効果の推定.html"><a href="介入効果の推定.html#調整"><i class="fa fa-check"></i>4.2 調整</a>
+<ul>
+<li class="chapter" data-level="" data-path="介入効果の推定.html"><a href="介入効果の推定.html#調整と調整化公式"><i class="fa fa-check"></i>4.2.1 調整と調整化公式</a></li>
+<li class="chapter" data-level="" data-path="介入効果の推定.html"><a href="介入効果の推定.html#何を調整すべきか"><i class="fa fa-check"></i>4.2.2 何を調整すべきか</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="介入効果の推定.html"><a href="介入効果の推定.html#バックドア基準"><i class="fa fa-check"></i>4.3 バックドア基準</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="動作環境.html"><a href="動作環境.html"><i class="fa fa-check"></i>動作環境</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Causal Inference Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="構造的因果モデルと因果ダイアグラムの基礎" class="section level1 hasAnchor">
+<h1>2. 構造的因果モデルと因果ダイアグラムの基礎<a href="構造的因果モデルと因果ダイアグラムの基礎.html#構造的因果モデルと因果ダイアグラムの基礎" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="構造的因果モデルscm" class="section level2 hasAnchor">
+<h2>2.1 構造的因果モデル(SCM)<a href="構造的因果モデルと因果ダイアグラムの基礎.html#構造的因果モデルscm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>変数間の因果関係を記述するためには、データセットにある変数間の因果関係についての仮定を正式に記述する必要がある。<br />
+そこで、<strong>構造的因果モデル(SCM: Structural Causal Model)</strong>を導入する。<br />
+SCMは、以下の3つによって記述される。</p>
+<ul>
+<li><span class="math inline">\(V\)</span>: その変動理由がモデル内で記述される変数(<strong>内生変数</strong>)の集合<br />
+</li>
+<li><span class="math inline">\(U\)</span>: その変動理由がモデル内で記述されない変数(<strong>外生変数</strong>)の集合<br />
+</li>
+<li><span class="math inline">\(F\)</span>: モデル内の他の変数によって内生変数の値を決定する関数の集合</li>
+</ul>
+<p>内生変数は<strong>少なくとも1つの外生変数を含む関数を用いて記述</strong>される(=少なくとも1つの外生変数の子孫である)。一方で、外生変数は<strong>他の変数によって記述できない</strong>(=他の変数の子孫ではない)。すなわち、すべての外生変数の値が分かれば、関数<span class="math inline">\(F\)</span>により全ての内生変数の値が正確に決定される。</p>
+<p>例: 教育レベル(<span class="math inline">\(X\)</span>)と職務経験(<span class="math inline">\(Y\)</span>)による給料(<span class="math inline">\(Z\)</span>)</p>
+<p><span class="math inline">\(U = \lbrace X, Y \rbrace, V = \lbrace Z \rbrace, F = \lbrace f_Z \rbrace\)</span><br />
+<span class="math display">\[
+\begin{aligned}
+  f_Z: Z &amp;= 2X + 3Y
+\end{aligned}
+\]</span></p>
+<p><strong>因果の定義</strong><span class="citation">(<a href="#ref-Pearl2016" role="doc-biblioref">Pearl et al. 2016</a>)</span><br />
+SCM内で<span class="math inline">\(Y\)</span>の値を決定する関数に<span class="math inline">\(X\)</span>が使われるとき、<span class="math inline">\(X\)</span>は<span class="math inline">\(Y\)</span>の<strong>直接原因</strong>であるという。<span class="math inline">\(X\)</span>が<span class="math inline">\(Y\)</span>の直接原因であるか、<span class="math inline">\(Y\)</span>の原因の直接原因であるとき、<span class="math inline">\(X\)</span><strong>は</strong><span class="math inline">\(Y\)</span><strong>の原因である</strong>という。上の例では、<span class="math inline">\(X\)</span><strong>と</strong><span class="math inline">\(Y\)</span><strong>は</strong><span class="math inline">\(Z\)</span><strong>の直接原因</strong>である。</p>
+<p><strong>ひとことメモ</strong><br />
+因果関係の定義には様々な流儀があり、ここではPearl et al. (2016)の定義を紹介した。
+前述の定義とほとんど同じであるが、林・黒木(2016)は以下のように定義している。</p>
+<blockquote>
+<p>「要因<span class="math inline">\(X\)</span>を人為的に変化させた(介入した)とき、要因<span class="math inline">\(Y\)</span>も変化する」とき「要因<span class="math inline">\(X \rightarrow Y\)</span>の因果関係がある」と呼ぶ</p>
+</blockquote>
+</div>
+<div id="因果ダイアグラムの概要" class="section level2 hasAnchor">
+<h2>2.2 因果ダイアグラムの概要<a href="構造的因果モデルと因果ダイアグラムの基礎.html#因果ダイアグラムの概要" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>因果ダイアグラムとは、図<a href="なぜ統計的因果推論が必要か.html#fig:fig-graph">1</a>のように<strong>丸(記号は何でもよいが)と矢印を用いて変数間の因果構造を表したもの</strong>である。矢印は<strong>因果関係</strong>を表し、それぞれのSCMには対応する因果ダイアグラムが必ず存在する。因果ダイアグラムを活用することで、定量的なデータに依ることなくモデルの中に存在する変数の関係を表現することができるので、因果推論を行う上で非常に重要なツールである。</p>
+<p>先ほどの例を因果ダイアグラムで表すと以下のようになる。</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-2-1.png" alt="因果ダイアグラムの例" width="240" />
+<p class="caption">
+Figure 4: 因果ダイアグラムの例
+</p>
+</div>
+</div>
+<div id="因果ダイアグラムの描き方" class="section level2 hasAnchor">
+<h2>2.3 因果ダイアグラムの描き方<a href="構造的因果モデルと因果ダイアグラムの基礎.html#因果ダイアグラムの描き方" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ここでは、Rでの因果ダイアグラムの描き方を解説する。<br />
+まずはノード(点)の名前と位置(x,y座標)を記したデータフレーム(あるいはtibble)を作成する。</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb23-1" aria-hidden="true" tabindex="-1"></a>dag1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;D&quot;</span>),</span>
+<span id="cb23-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb23-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>),</span>
+<span id="cb23-3"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb23-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">y    =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p>その後、<code>gadify()</code>でノード間の関係を記述する。</p>
+<ul>
+<li><code>y ~ x</code>は<code>y &lt;- x</code>を表す。<br />
+</li>
+<li><code>x1 ~~ x2</code>は <code>x1 &lt;-&gt; x2</code>を表す。</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-1" aria-hidden="true" tabindex="-1"></a>dagified_dag1 <span class="ot">&lt;-</span> <span class="fu">dagify</span>(A <span class="sc">~</span> B,</span>
+<span id="cb24-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-2" aria-hidden="true" tabindex="-1"></a>                      C <span class="sc">~</span> B,</span>
+<span id="cb24-3"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-3" aria-hidden="true" tabindex="-1"></a>                      D <span class="sc">~</span> A <span class="sc">+</span> C,</span>
+<span id="cb24-4"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-4" aria-hidden="true" tabindex="-1"></a>                      <span class="do">##暴露変数の指定ができる    </span></span>
+<span id="cb24-5"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">exposure =</span> <span class="st">&quot;C&quot;</span>,</span>
+<span id="cb24-6"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-6" aria-hidden="true" tabindex="-1"></a>                      <span class="do">## 結果変数の指定ができる  </span></span>
+<span id="cb24-7"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">outcome =</span> <span class="st">&quot;D&quot;</span>,</span>
+<span id="cb24-8"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb24-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> dag1)</span></code></pre></div>
+<p>グラフの描画に必要な情報が書き込まれるよう。</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb25-1" aria-hidden="true" tabindex="-1"></a>dagified_dag1</span></code></pre></div>
+<pre><code>## dag {
+## A [pos=&quot;1.000,2.000&quot;]
+## B [pos=&quot;2.000,2.000&quot;]
+## C [exposure,pos=&quot;3.000,2.000&quot;]
+## D [outcome,pos=&quot;2.000,1.000&quot;]
+## A -&gt; D
+## B -&gt; A
+## B -&gt; C
+## C -&gt; D
+## }</code></pre>
+<p><code>tidy_dagitty()</code>でデータフレームの形で出力もできる。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy_dagitty</span>(dagified_dag1)</span></code></pre></div>
+<pre><code>## # A DAG with 4 nodes and 4 edges
+## #
+## # Exposure: C
+## # Outcome: D
+## #
+## # A tibble: 5 × 8
+##   name      x     y direction to     xend  yend circular
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;     &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;lgl&gt;   
+## 1 A         1     2 -&gt;        D         2     1 FALSE   
+## 2 B         2     2 -&gt;        A         1     2 FALSE   
+## 3 B         2     2 -&gt;        C         3     2 FALSE   
+## 4 C         3     2 -&gt;        D         2     1 FALSE   
+## 5 D         2     1 &lt;NA&gt;      &lt;NA&gt;     NA    NA FALSE</code></pre>
+<p>最後に、<code>ggplot()</code>を用いてダイアグラムを描画する。<br />
+<code>ggdag</code>パッケージに含まれる関数を使用する。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dagified_dag1,</span>
+<span id="cb29-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y=</span>y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))<span class="sc">+</span></span>
+<span id="cb29-3"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## ノード、文字、エッジの設定。Dのみ色を変える </span></span>
+<span id="cb29-4"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dag_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> name <span class="sc">==</span> <span class="st">&quot;D&quot;</span>),</span>
+<span id="cb29-5"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">size =</span> <span class="fl">10.5</span>, <span class="at">show.legend =</span> F)<span class="sc">+</span></span>
+<span id="cb29-6"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dag_text</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb29-7"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dag_edges</span>()<span class="sc">+</span></span>
+<span id="cb29-8"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;orange&quot;</span>))<span class="sc">+</span></span>
+<span id="cb29-9"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 座標を消す</span></span>
+<span id="cb29-10"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">expand =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">expand =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb29-12"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb29-13"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig-sample"></span>
+<img src="Causal-Inference-Using-R_files/figure-html/fig-sample-1.png" alt="作成した因果ダイアグラム \label{fig_sample}" width="336" />
+<p class="caption">
+Figure 5: 作成した因果ダイアグラム
+</p>
+</div>
+<p>特にこだわりがなければ、<code>ggdag()</code>で容易に描ける。<br />
+<code>theme_dag()</code>で最小限のテーマ(目盛や背景を削除)にしてくれる。</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dagified_dag1, <span class="at">node_size =</span><span class="dv">10</span>, <span class="at">text_size =</span> <span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb30-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
+<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-7-1.png" alt="ggdag()で描いた因果ダイアグラム" width="288" />
+<p class="caption">
+Figure 6: ggdag()で描いた因果ダイアグラム
+</p>
+</div>
+</div>
+<div id="因果ダイアグラムの基礎" class="section level2 hasAnchor">
+<h2>2.4 因果ダイアグラムの基礎<a href="構造的因果モデルと因果ダイアグラムの基礎.html#因果ダイアグラムの基礎" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+有向辺(方向のあるエッジ)の始点を<strong>親</strong>、終点を<strong>子</strong>と呼ぶ。<br />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-8"></span>
+<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-8-1.png" alt="ノードの親子" width="288" />
+<p class="caption">
+Figure 7: ノードの親子
+</p>
+</div>
+<p>また、3つ以上のノードがあり、2つの有向辺が共に入ってくるノードや、2つの有向辺が共に出ていくノードがない場合(下図のようなとき)、これを<strong>有向道</strong>と呼ぶ。<br />
+有向道上の最初のノードは、道上のすべてのノードの<strong>祖先</strong>である(下図で、CはAの<strong>祖先</strong>、AはCの<strong>子孫(=孫)</strong>である)。</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-9"></span>
+<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-9-1.png" alt="ノードの親・子・孫" width="288" />
+<p class="caption">
+Figure 8: ノードの親・子・孫
+</p>
+</div>
+<p>Rでは、<code>dagitty</code>パッケージでこれを求められる。<br />
+図<a href="構造的因果モデルと因果ダイアグラムの基礎.html#fig:fig-sample">5</a>の因果ダイアグラムを用いて求めてみる。</p>
+<p><strong>親</strong></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 親</span></span>
+<span id="cb31-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parents</span>(dagified_dag1,<span class="st">&quot;D&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;A&quot; &quot;C&quot;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 子</span></span>
+<span id="cb33-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">children</span>(dagified_dag1, <span class="st">&quot;B&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;A&quot; &quot;C&quot;</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 祖先</span></span>
+<span id="cb35-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ancestors</span>(dagified_dag1, <span class="st">&quot;D&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;D&quot; &quot;C&quot; &quot;B&quot; &quot;A&quot;</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 子孫</span></span>
+<span id="cb37-2"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">descendants</span>(dagified_dag1, <span class="st">&quot;B&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;A&quot;</code></pre>
+<p>また、<strong>特定の2つのノード間の有向道</strong>は以下のように求められる。<br />
+<code>directed = F</code>とすると有向道以外の道も調べられる。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paths</span>(dagified_dag1, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="at">directed =</span> T)<span class="sc">$</span>path</span></code></pre></div>
+<pre><code>## [1] &quot;B -&gt; A -&gt; D&quot; &quot;B -&gt; C -&gt; D&quot;</code></pre>
+有向道があるノードからスタートして、それ自身に戻ってくるとき、その道とグラフは<strong>巡回的</strong>という。<br />
+例えば、以下の二つのグラフは巡回的である。<br />
+巡回的でないグラフを<strong>非巡回的</strong>であるという。<br />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
+<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-12-1.png" alt="巡回的なグラフの例" width="480" />
+<p class="caption">
+Figure 9: 巡回的なグラフの例
+</p>
+</div>
+</div>
+<div id="独立と従属" class="section level2 hasAnchor">
+<h2>2.5 独立と従属<a href="構造的因果モデルと因果ダイアグラムの基礎.html#独立と従属" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>2つの変数<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>は、以下が成り立つときにそれぞれがとりうる全ての値<span class="math inline">\(x\)</span>と<span class="math inline">\(y\)</span>について<strong>独立</strong>という。すなわち、XとYが独立のとき、変数Yの値がなんであろうと、<span class="math inline">\(P(X = x)\)</span>の値は変わらない(<strong>= 相関がない</strong>)。</p>
+<p><span class="math display">\[
+P(X = x|Y = y) = p(X = x)
+\]</span></p>
+<p>独立は記号を用いて以下のように表せる。</p>
+<p><span class="math display">\[
+X \mathop{\perp\!\!\!\!\perp}  Y
+\]</span></p>
+<p>また、確率変数<span class="math inline">\(Z\)</span>の任意の値が与えられたときに<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が全ての<span class="math inline">\(x\)</span>、<span class="math inline">\(y\)</span>について独立のとき、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>は<span class="math inline">\(Z\)</span>の下で<strong>条件付き独立</strong>であるという。<br />
+以下のようにあらわす。</p>
+<p><span class="math display">\[
+X \mathop{\perp\!\!\!\!\perp}  Y|Z
+\]</span></p>
+<p>因果ダイアグラム上で独立または条件付き独立であるノードは、<code>impliedConditionalIndependencies()</code>を用いて以下のように求められる(例. 図<a href="構造的因果モデルと因果ダイアグラムの基礎.html#fig:fig-sample">5</a>について)。</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="構造的因果モデルと因果ダイアグラムの基礎.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">impliedConditionalIndependencies</span>(dagified_dag1)</span></code></pre></div>
+<pre><code>## A _||_ C | B
+## B _||_ D | A, C</code></pre>
+<p>なお、独立でない2変数は<strong>従属</strong>であるという。</p>
+<p><strong>ひとことメモ</strong><br />
+実際の分析では、例えば以下のような場合に<span class="math inline">\(Z\)</span><strong>について条件付け</strong>したことになる。</p>
+<ul>
+<li>ある<span class="math inline">\(Z\)</span>の値のデータのみを抽出して分析する<br />
+</li>
+<li>偏相関係数: <span class="math inline">\(Z\)</span>の影響を排除して他の2変数相関係数を算出する<br />
+</li>
+<li>回帰分析: 説明変数に<span class="math inline">\(Z\)</span>を加えて回帰分析を行う</li>
+</ul>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Pearl2016" class="csl-entry">
+Pearl J, Glymour M an, Jewell NP (2016) Causal inference in statistics: A primer. John Wiley &amp; Sons
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="なぜ統計的因果推論が必要か.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="因果ダイアグラムの因果推論への応用.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
