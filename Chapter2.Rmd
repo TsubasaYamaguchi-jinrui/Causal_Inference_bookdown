@@ -145,21 +145,16 @@ Rでは、`dagitty`パッケージでこれを求められる。
 
 **親**  
 ```{r}
+## 親
 parents(dagified_dag1,"D")
-```
 
-**子**  
-```{r}
+## 子
 children(dagified_dag1, "B")
-```
 
-**祖先**  
-```{r}
+## 祖先
 ancestors(dagified_dag1, "D")
-```
 
-**子孫**  
-```{r}
+## 子孫
 descendants(dagified_dag1, "B")
 ```
 
