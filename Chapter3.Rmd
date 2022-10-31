@@ -95,6 +95,7 @@ ggpairs(d)
 model_parameters(lm(Z~X,d)) %>% 
   print_md()
 ```
+<br/>  
 
 しかし、**説明変数に**$Y$**も加えると(=**$Y$**で条件づけると)**、$X$の係数はほぼ0になり、因果関係がある$X$と$Z$の関連は消失してしまう($X$**と**$Z$**は、Yの下で条件付き独立** )。  
 
@@ -103,6 +104,7 @@ model_parameters(lm(Z~X,d)) %>%
 model_parameters(lm(Z~X+Y,d)) %>% 
   print_md()
 ```
+<br/>  
 
 なお、XとYの間の有向道が1つだけあり、それが連鎖経路であるとき、$X$**と**$Y$**はその間のいずれの変数(1つでなくともよい)についても条件付き独立**である。すなわち、下図で$X$と$W$は$Y$と$Z$いずれでの下でも条件付き独立になる。    
 
@@ -205,6 +207,7 @@ ggpairs(d)
 model_parameters(lm(Z~Y,d)) %>% 
   print_md()
 ```
+<br/>  
 
 しかし、**説明変数に**$X$**も加えると(=**$X$**で条件づけると)**、$Y$の係数はほぼ0になり、$Y$と$Z$の関連は消失する(**=**$Y$**と**$Z$**は**$X$**の下で条件付き独立**)。すなわち、交絡が解消された。      
 ```{r}
@@ -518,6 +521,7 @@ Rでは、すべての独立/条件付き独立の変数の集合は以下のよ
 ```{r}
 # impliedConditionalIndependencies(dagified_prac1)
 ```
+<br/>  
 
 > 2. 図\@ref(fig:fig-prac1)のモデルからデータを生成し、線形方程式$Y = a + bX + cZ$をあてはめる。傾きbを0にするには$Z$にどの変数を選べばよいか。      
 
@@ -542,6 +546,7 @@ lm(Y ~ X + T, data = d_prac1) %>%
   model_parameters() %>% 
   print_md()
 ```
+<br/>  
 
 他の変数(例えば$S$や$V$)ではほぼ0になる。  
 ```{r}
@@ -549,12 +554,14 @@ lm(Y ~ X + S, data = d_prac1) %>%
   model_parameters() %>% 
   print_md()
 ```
+<br/>  
 
 ```{r}
 lm(Y ~ X + V, data = d_prac1) %>% 
   model_parameters() %>% 
   print_md()
 ```
+<br/>  
 
 > 3. 図\@ref(fig:fig-prac2)で隣接していない変数の組それぞれについて、どの変数の集合で条件付き独立となるか  
 
@@ -587,6 +594,7 @@ A. 問1で挙げた組み合わせに加えて、以下でも条件付き独立�
 ```{r}
 #impliedConditionalIndependencies(dagified_prac2)
 ```
+<br/>  
 
 > 4. 図\@ref(fig:fig-prac2)のモデルで、方程式$Y = a + bX + cR + dS + eT + fP$をあてはめると、どの係数が0になるか。 
 
@@ -608,6 +616,7 @@ lm(Y ~ X + R + S + T + P, data = d_prac2) %>%
   model_parameters() %>% 
   print_md()
 ```
+<br/>  
 
 > 5. 以下のダイアグラムについて、隣接しないノード全ての組について、その2つをd分離する変数の集合を答えよ(最小限必要な変数のみでよい)。  
 
@@ -648,6 +657,7 @@ A. 以下の通り
 ```{r}
 #impliedConditionalIndependencies(dagified_prac3)
 ```
+<br/>  
 
 > 6. 図\@ref(fig:fig-prac3)のモデルで$Z3$の値から$Z2$の値を予測する。$W$の値も使った方がよりよい予測になるか？  
 
@@ -727,6 +737,7 @@ lm(Y ~ X + Z2 + Z3 + W, data = d_prac3) %>%
   model_parameters() %>% 
   print_md()
 ```
+<br/>  
 
 > 2. 図\@ref(fig:fig-prac3)のモデルで、$X$が観測されていない場合に、もしいずれかの係数が0でないときにモデルが誤りになる$Z_3$の回帰式を１つ書け  
 
@@ -737,6 +748,7 @@ $Z_3$と独立な変数はないため、係数が0になるような変数は�
 latents(dagified_prac3) <- "X"
 impliedConditionalIndependencies(dagified_prac3)
 ```
+<br/>  
 
 > 3. 図\@ref(fig:fig-prac3)のモデルで問1のような回帰式がいくつあればモデルを完全に検証したことになるか。  
 

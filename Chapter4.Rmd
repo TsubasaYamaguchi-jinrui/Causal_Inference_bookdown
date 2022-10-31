@@ -30,7 +30,7 @@ d %>%
   mutate(Z = str_replace_all(Z, c("1" = "下流域","0"="上流域"))) %>% 
   ggplot(aes(x=X,y=Y))+
   geom_point(aes(color = Z))+
-  geom_smooth(method = "lm", se = F, color = "grey")+
+  geom_smooth(aes(color = Z), method = "lm", se = F, color = "grey")+
   theme_bw(base_size = 12)+
   theme(aspect.ratio = 1)+
   labs(color = "")
@@ -50,7 +50,7 @@ d2 %>%
   mutate(Z = str_replace_all(Z, c("1" = "下流域","0"="上流域"))) %>% 
   ggplot(aes(x=X,y=Y))+
   geom_point(aes(color = Z))+
-  geom_smooth(method = "lm", se = F, color = "grey")+
+  geom_smooth(aes(color = Z),method = "lm", se = F, color = "grey")+
   theme_bw(base_size = 12)+
   theme(aspect.ratio = 1)+
   labs(color = "")

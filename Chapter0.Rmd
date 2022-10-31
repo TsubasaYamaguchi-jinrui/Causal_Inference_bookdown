@@ -5,7 +5,7 @@
 [dagitty](http://www.dagitty.net/)  
 [ggdag](https://rdrr.io/cran/ggdag/man/ggdag-package.html)  
 
-```{r, cache = FALSE}
+```{r, cache = FALSE, warnings = FALSE}
 library(tidyverse)
 library(dagitty)
 library(ggdag)
