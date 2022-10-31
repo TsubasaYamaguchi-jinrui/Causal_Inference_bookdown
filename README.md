@@ -3,10 +3,10 @@
 
 参考にした書籍やウェブサイトは、以下のものである。  
 
-- Causal inference in statistics: A primer (邦訳「入門統計的因果推論」)[@Pearl2016]   
+- Causal inference in statistics: A primer (邦訳「入門統計的因果推論」)(Pearl et al. 2016)  
   $\rightarrow$ 本稿のベース      
 
-- The book of why: the new science of cause and effect. (邦訳「因果推論の科学」)[@Pearl2018]  
+- The book of why: the new science of cause and effect. (邦訳「因果推論の科学」)(Pearl and Mackenzie 2018) 
   $\rightarrow$ 一般向け書籍。数式を用いない解説や事例が豊富。因果推論の科学ができるまでの歴史についても学べる。  
 
 - 岩波データサイエンス vol. 3 因果推論ー実世界のデータから因果を読む (岩波データサイエンス慣行委員会, 2016)  
