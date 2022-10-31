@@ -1,0 +1,2 @@
+# Causal_Inference_bookdown
+Pearl流因果推論についてまとめたフォルダである。
