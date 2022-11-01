@@ -98,7 +98,9 @@ ggpairs(d)
 回帰分析($Z \sim X$)をすると、$X$と$Z$は有意に関連している($X$**と**$Z$**は従属**)。
 ```{r}
 model_parameters(lm(Z~X,d)) %>% 
-  print_md()
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
@@ -107,7 +109,9 @@ model_parameters(lm(Z~X,d)) %>%
 ▶ $Y$**の値が分かれば、**$Z$**を予測するうえで**$X$**の値は関係なくなるから**($X$は$Y$通してしか$Z$に影響を与えていないので)      
 ```{r}
 model_parameters(lm(Z~X+Y,d)) %>% 
-  print_md()
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
@@ -212,14 +216,18 @@ ggpairs(d)
 回帰分析($Z \sim Y$)をすると、$Y$と$Z$は有意に関連している($Y$**と**$Z$**は従属**)。  
 ```{r}
 model_parameters(lm(Z~Y,d)) %>% 
-  print_md()
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
 しかし、**説明変数に**$X$**も加えると(=**$X$**で条件づけると)**、$Y$の係数はほぼ0になり、$Y$と$Z$の関連は消失する(**=**$Y$**と**$Z$**は**$X$**の下で条件付き独立**)。すなわち、交絡が解消された。      
 ```{r}
 model_parameters(lm(Z~X+Y,d)) %>% 
-  print_md()
+ data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 
 
@@ -569,23 +577,29 @@ d_prac1 <- simulateSEM(# モデルの因果ダイアグラム
 確かに$T$で条件づけると$X$の係数は0でない。  
 ```{r}
 lm(Y ~ X + T, data = d_prac1) %>% 
-  model_parameters() %>% 
-  print_md()
+  model_parameters() %>%   
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
 他の変数(例えば$S$や$V$)では$X$の係数はほぼ0になる。  
 ```{r}
 lm(Y ~ X + S, data = d_prac1) %>% 
-  model_parameters() %>% 
-  print_md()
+  model_parameters() %>%   
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
 ```{r}
 lm(Y ~ X + V, data = d_prac1) %>% 
-  model_parameters() %>% 
-  print_md()
+  model_parameters() %>%   
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
@@ -641,8 +655,10 @@ d_prac2 <- simulateSEM(# モデルの因果ダイアグラム,
                        N = 5000)
 
 lm(Y ~ X + R + S + T + P, data = d_prac2) %>% 
-  model_parameters() %>% 
-  print_md()
+  model_parameters() %>%   
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
@@ -717,7 +733,7 @@ m_with_Y <- lm(Z2 ~ Z3 + Y, data = d_prac3)
 compare_performance(m_without_W,m_with_W, m_with_Y) %>% 
   data.frame() %>% 
   dplyr::select(1,7,8) %>% 
-  print_md()
+  kable()
 ```
 
 ## モデル検定と因果探索 {#s3-3}   
@@ -764,8 +780,10 @@ $$
 実際、モデルから生成したデータを用いて分析すると$X$の係数はほぼ0になる。  
 ```{r}
 lm(Y ~ X + Z2 + Z3 + W, data = d_prac3) %>% 
-  model_parameters() %>% 
-  print_md()
+  model_parameters() %>%   
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
 <br/>  
 
@@ -801,6 +819,8 @@ $$
 実際、モデルから生成したデータを用いて分析すると$Z_1, Z_2, Z_3$の係数はほぼ0になる。  
 ```{r}
 lm(W ~ X + Z1 + Z2 + Z3, data = d_prac3) %>% 
-  model_parameters() %>% 
-  print_md()
+  model_parameters() %>%   
+  data.frame() %>% 
+  dplyr::select(1,2,3,9) %>% 
+  kable(digits = 3, align = "lccc")
 ```
