@@ -23,7 +23,7 @@
 <meta name="author" content="Tsubasa Yamaguchi" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-11-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -299,34 +299,30 @@ div.csl-indent {
 <p><br/></p>
 <p>回帰分析(<span class="math inline">\(Z \sim X\)</span>)をすると、<span class="math inline">\(X\)</span>と<span class="math inline">\(Z\)</span>は有意に関連している(<span class="math inline">\(X\)</span><strong>と</strong><span class="math inline">\(Z\)</span><strong>は従属</strong>)。</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="因果ダイアグラムの因果推論への応用.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(<span class="fu">lm</span>(Z<span class="sc">~</span>X,d)) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="因果ダイアグラムの因果推論への応用.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb29-2"><a href="因果ダイアグラムの因果推論への応用.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="因果ダイアグラムの因果推論への応用.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-4"><a href="因果ダイアグラムの因果推論への応用.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(9998)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">-6.99e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.03, 0.02)</td>
-<td align="center">-0.59</td>
+<td align="center">-0.007</td>
+<td align="center">0.012</td>
 <td align="center">0.558</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">0.52</td>
-<td align="center">0.01</td>
-<td align="center">(0.50, 0.54)</td>
-<td align="center">43.80</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.520</td>
+<td align="center">0.012</td>
+<td align="center">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -334,42 +330,36 @@ div.csl-indent {
 <p>しかし、<strong>説明変数に</strong><span class="math inline">\(Y\)</span><strong>も加えると(=</strong><span class="math inline">\(Y\)</span><strong>で条件づけると)</strong>、<span class="math inline">\(X\)</span>の係数はほぼ0になり、因果関係がある<span class="math inline">\(X\)</span>と<span class="math inline">\(Z\)</span>の関連は消失してしまう。このことからも、<span class="math inline">\(X\)</span><strong>と</strong><span class="math inline">\(Z\)</span><strong>は、</strong><span class="math inline">\(Y\)</span><strong>の下で条件付き独立</strong>であることが分かる。</p>
 <p>▶ <span class="math inline">\(Y\)</span><strong>の値が分かれば、</strong><span class="math inline">\(Z\)</span><strong>を予測するうえで</strong><span class="math inline">\(X\)</span><strong>の値は関係なくなるから</strong>(<span class="math inline">\(X\)</span>は<span class="math inline">\(Y\)</span>通してしか<span class="math inline">\(Z\)</span>に影響を与えていないので)</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="因果ダイアグラムの因果推論への応用.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(<span class="fu">lm</span>(Z<span class="sc">~</span>X<span class="sc">+</span>Y,d)) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="因果ダイアグラムの因果推論への応用.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb30-2"><a href="因果ダイアグラムの因果推論への応用.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="因果ダイアグラムの因果推論への応用.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="因果ダイアグラムの因果推論への応用.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(9997)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">-7.54e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.03, 0.01)</td>
-<td align="center">-0.75</td>
+<td align="center">-0.008</td>
+<td align="center">0.010</td>
 <td align="center">0.451</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">3.56e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.02, 0.03)</td>
-<td align="center">0.28</td>
+<td align="center">0.004</td>
+<td align="center">0.013</td>
 <td align="center">0.780</td>
 </tr>
 <tr class="odd">
 <td align="left">Y</td>
-<td align="center">0.65</td>
-<td align="center">0.01</td>
-<td align="center">(0.64, 0.67)</td>
-<td align="center">64.99</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.655</td>
+<td align="center">0.010</td>
+<td align="center">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -456,83 +446,65 @@ div.csl-indent {
 <p><br/></p>
 <p>回帰分析(<span class="math inline">\(Z \sim Y\)</span>)をすると、<span class="math inline">\(Y\)</span>と<span class="math inline">\(Z\)</span>は有意に関連している(<span class="math inline">\(Y\)</span><strong>と</strong><span class="math inline">\(Z\)</span><strong>は従属</strong>)。</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="因果ダイアグラムの因果推論への応用.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(<span class="fu">lm</span>(Z<span class="sc">~</span>Y,d)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a href="因果ダイアグラムの因果推論への応用.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
-<table style="width:100%;">
-<colgroup>
-<col width="17%" />
-<col width="19%" />
-<col width="14%" />
-<col width="22%" />
-<col width="13%" />
-<col width="11%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Parameter</th>
-<th align="center">Coefficient</th>
-<th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(9998)</th>
-<th align="center">p</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="center">5.90e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.01, 0.03)</td>
-<td align="center">0.57</td>
-<td align="center">0.567</td>
-</tr>
-<tr class="even">
-<td align="left">Y</td>
-<td align="center">0.23</td>
-<td align="center">3.80e-03</td>
-<td align="center">(0.22, 0.24)</td>
-<td align="center">59.90</td>
-<td align="center">&lt; .001</td>
-</tr>
-</tbody>
-</table>
-<p><br/></p>
-<p>しかし、<strong>説明変数に</strong><span class="math inline">\(X\)</span><strong>も加えると(=</strong><span class="math inline">\(X\)</span><strong>で条件づけると)</strong>、<span class="math inline">\(Y\)</span>の係数はほぼ0になり、<span class="math inline">\(Y\)</span>と<span class="math inline">\(Z\)</span>の関連は消失する(<strong>=</strong><span class="math inline">\(Y\)</span><strong>と</strong><span class="math inline">\(Z\)</span><strong>は</strong><span class="math inline">\(X\)</span><strong>の下で条件付き独立</strong>)。すなわち、交絡が解消された。</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="因果ダイアグラムの因果推論への応用.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(<span class="fu">lm</span>(Z<span class="sc">~</span>X<span class="sc">+</span>Y,d)) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="因果ダイアグラムの因果推論への応用.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb36-2"><a href="因果ダイアグラムの因果推論への応用.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="因果ダイアグラムの因果推論への応用.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-4"><a href="因果ダイアグラムの因果推論への応用.html#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(9997)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">5.99e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.01, 0.03)</td>
-<td align="center">0.60</td>
+<td align="center">0.006</td>
+<td align="center">0.010</td>
+<td align="center">0.567</td>
+</tr>
+<tr class="even">
+<td align="left">Y</td>
+<td align="center">0.228</td>
+<td align="center">0.004</td>
+<td align="center">0.000</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<p>しかし、<strong>説明変数に</strong><span class="math inline">\(X\)</span><strong>も加えると(=</strong><span class="math inline">\(X\)</span><strong>で条件づけると)</strong>、<span class="math inline">\(Y\)</span>の係数はほぼ0になり、<span class="math inline">\(Y\)</span>と<span class="math inline">\(Z\)</span>の関連は消失する(<strong>=</strong><span class="math inline">\(Y\)</span><strong>と</strong><span class="math inline">\(Z\)</span><strong>は</strong><span class="math inline">\(X\)</span><strong>の下で条件付き独立</strong>)。すなわち、交絡が解消された。</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="因果ダイアグラムの因果推論への応用.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_parameters</span>(<span class="fu">lm</span>(Z<span class="sc">~</span>X<span class="sc">+</span>Y,d)) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="因果ダイアグラムの因果推論への応用.html#cb37-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="因果ダイアグラムの因果推論への応用.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="因果ダイアグラムの因果推論への応用.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Parameter</th>
+<th align="center">Coefficient</th>
+<th align="center">SE</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="center">0.006</td>
+<td align="center">0.010</td>
 <td align="center">0.550</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">0.64</td>
-<td align="center">0.03</td>
-<td align="center">(0.59, 0.69)</td>
-<td align="center">23.67</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.642</td>
+<td align="center">0.027</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">Y</td>
-<td align="center">6.24e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.01, 0.03)</td>
-<td align="center">0.62</td>
+<td align="center">0.006</td>
+<td align="center">0.010</td>
 <td align="center">0.535</td>
 </tr>
 </tbody>
@@ -642,7 +614,7 @@ div.csl-indent {
 <p>ここで、<span class="math inline">\(Z\)</span>で条件付けるとどうなるだろうか。例えば、合格者(<span class="math inline">\(Z=1\)</span>)のデータのみを抽出する。<br />
 青い直線は合格者のみのデータを抽出したときの回帰直線である。このとき、因果関係にない<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>の間に相関が生じていることが分かる(= <span class="math inline">\(X\)</span><strong>と</strong><span class="math inline">\(Y\)</span><strong>は</strong><span class="math inline">\(Z\)</span><strong>の下で条件付き従属</strong>)。これを<strong>合流点バイアス</strong>という。</p>
 <div class="figure" style="text-align: left"><span style="display:block;" id="fig:unnamed-chunk-32"></span>
-<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-32-1.png" alt="合流点バイアスの例" width="432" />
+<img src="Causal-Inference-Using-R_files/figure-html/unnamed-chunk-32-1.png" alt="合流点バイアスの例" width="576" />
 <p class="caption">
 図3.8: 合流点バイアスの例
 </p>
@@ -840,128 +812,110 @@ div.csl-indent {
 <span id="cb67-6"><a href="因果ダイアグラムの因果推論への応用.html#cb67-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">N =</span> <span class="dv">5000</span>)</span></code></pre></div>
 <p>確かに<span class="math inline">\(T\)</span>で条件づけると<span class="math inline">\(X\)</span>の係数は0でない。</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="因果ダイアグラムの因果推論への応用.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">+</span> T, <span class="at">data =</span> d_prac1) <span class="sc">%&gt;%</span> </span>
-<span id="cb68-2"><a href="因果ダイアグラムの因果推論への応用.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb68-3"><a href="因果ダイアグラムの因果推論への応用.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb68-2"><a href="因果ダイアグラムの因果推論への応用.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span>   </span>
+<span id="cb68-3"><a href="因果ダイアグラムの因果推論への応用.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb68-4"><a href="因果ダイアグラムの因果推論への応用.html#cb68-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-5"><a href="因果ダイアグラムの因果推論への応用.html#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(4997)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">0.01</td>
-<td align="center">0.01</td>
-<td align="center">(-0.01, 0.04)</td>
-<td align="center">0.86</td>
+<td align="center">0.011</td>
+<td align="center">0.013</td>
 <td align="center">0.391</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">-0.14</td>
-<td align="center">0.01</td>
-<td align="center">(-0.16, -0.11)</td>
-<td align="center">-9.79</td>
-<td align="center">&lt; .001</td>
+<td align="center">-0.136</td>
+<td align="center">0.014</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">T</td>
-<td align="center">0.40</td>
-<td align="center">0.01</td>
-<td align="center">(0.38, 0.43)</td>
-<td align="center">29.29</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.405</td>
+<td align="center">0.014</td>
+<td align="center">0.000</td>
 </tr>
 </tbody>
 </table>
 <p><br/></p>
 <p>他の変数(例えば<span class="math inline">\(S\)</span>や<span class="math inline">\(V\)</span>)では<span class="math inline">\(X\)</span>の係数はほぼ0になる。</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="因果ダイアグラムの因果推論への応用.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">+</span> S, <span class="at">data =</span> d_prac1) <span class="sc">%&gt;%</span> </span>
-<span id="cb69-2"><a href="因果ダイアグラムの因果推論への応用.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb69-3"><a href="因果ダイアグラムの因果推論への応用.html#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb69-2"><a href="因果ダイアグラムの因果推論への応用.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span>   </span>
+<span id="cb69-3"><a href="因果ダイアグラムの因果推論への応用.html#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb69-4"><a href="因果ダイアグラムの因果推論への応用.html#cb69-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-5"><a href="因果ダイアグラムの因果推論への応用.html#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(4997)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">0.01</td>
-<td align="center">0.01</td>
-<td align="center">(-0.02, 0.04)</td>
-<td align="center">0.81</td>
+<td align="center">0.011</td>
+<td align="center">0.014</td>
 <td align="center">0.417</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">-9.83e-05</td>
-<td align="center">0.02</td>
-<td align="center">(-0.03, 0.03)</td>
-<td align="center">-6.09e-03</td>
+<td align="center">0.000</td>
+<td align="center">0.016</td>
 <td align="center">0.995</td>
 </tr>
 <tr class="odd">
 <td align="left">S</td>
-<td align="center">0.01</td>
-<td align="center">0.02</td>
-<td align="center">(-0.02, 0.05)</td>
-<td align="center">0.93</td>
+<td align="center">0.015</td>
+<td align="center">0.016</td>
 <td align="center">0.351</td>
 </tr>
 </tbody>
 </table>
 <p><br/></p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="因果ダイアグラムの因果推論への応用.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">+</span> V, <span class="at">data =</span> d_prac1) <span class="sc">%&gt;%</span> </span>
-<span id="cb70-2"><a href="因果ダイアグラムの因果推論への応用.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb70-3"><a href="因果ダイアグラムの因果推論への応用.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb70-2"><a href="因果ダイアグラムの因果推論への応用.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span>   </span>
+<span id="cb70-3"><a href="因果ダイアグラムの因果推論への応用.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb70-4"><a href="因果ダイアグラムの因果推論への応用.html#cb70-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-5"><a href="因果ダイアグラムの因果推論への応用.html#cb70-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(4997)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">6.84e-03</td>
+<td align="center">0.007</td>
 <td align="center">0.01</td>
-<td align="center">(-0.01, 0.03)</td>
-<td align="center">0.68</td>
 <td align="center">0.497</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">4.42e-03</td>
+<td align="center">0.004</td>
 <td align="center">0.01</td>
-<td align="center">(-0.02, 0.02)</td>
-<td align="center">0.44</td>
 <td align="center">0.660</td>
 </tr>
 <tr class="odd">
 <td align="left">V</td>
-<td align="center">0.70</td>
+<td align="center">0.695</td>
 <td align="center">0.01</td>
-<td align="center">(0.68, 0.71)</td>
-<td align="center">69.39</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -1013,66 +967,54 @@ div.csl-indent {
 <span id="cb74-6"><a href="因果ダイアグラムの因果推論への応用.html#cb74-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">N =</span> <span class="dv">5000</span>)</span>
 <span id="cb74-7"><a href="因果ダイアグラムの因果推論への応用.html#cb74-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb74-8"><a href="因果ダイアグラムの因果推論への応用.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">+</span> R <span class="sc">+</span> S <span class="sc">+</span> T <span class="sc">+</span> P, <span class="at">data =</span> d_prac2) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-9"><a href="因果ダイアグラムの因果推論への応用.html#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb74-10"><a href="因果ダイアグラムの因果推論への応用.html#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb74-9"><a href="因果ダイアグラムの因果推論への応用.html#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span>   </span>
+<span id="cb74-10"><a href="因果ダイアグラムの因果推論への応用.html#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb74-11"><a href="因果ダイアグラムの因果推論への応用.html#cb74-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-12"><a href="因果ダイアグラムの因果推論への応用.html#cb74-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(4994)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">-0.01</td>
-<td align="center">0.01</td>
-<td align="center">(-0.04, 0.01)</td>
-<td align="center">-1.15</td>
+<td align="center">-0.015</td>
+<td align="center">0.013</td>
 <td align="center">0.249</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">-0.01</td>
-<td align="center">0.02</td>
-<td align="center">(-0.05, 0.02)</td>
-<td align="center">-0.76</td>
+<td align="center">-0.013</td>
+<td align="center">0.018</td>
 <td align="center">0.449</td>
 </tr>
 <tr class="odd">
 <td align="left">R</td>
-<td align="center">-0.02</td>
-<td align="center">0.02</td>
-<td align="center">(-0.06, 0.03)</td>
-<td align="center">-0.79</td>
+<td align="center">-0.017</td>
+<td align="center">0.022</td>
 <td align="center">0.430</td>
 </tr>
 <tr class="even">
 <td align="left">S</td>
-<td align="center">-0.44</td>
-<td align="center">0.02</td>
-<td align="center">(-0.48, -0.39)</td>
-<td align="center">-19.75</td>
-<td align="center">&lt; .001</td>
+<td align="center">-0.437</td>
+<td align="center">0.022</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">T</td>
-<td align="center">0.68</td>
-<td align="center">0.02</td>
-<td align="center">(0.64, 0.72)</td>
-<td align="center">31.17</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.679</td>
+<td align="center">0.022</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">P</td>
-<td align="center">-6.91e-03</td>
-<td align="center">0.02</td>
-<td align="center">(-0.04, 0.03)</td>
-<td align="center">-0.39</td>
+<td align="center">-0.007</td>
+<td align="center">0.018</td>
 <td align="center">0.698</td>
 </tr>
 </tbody>
@@ -1138,30 +1080,30 @@ div.csl-indent {
 <span id="cb77-2"><a href="因果ダイアグラムの因果推論への応用.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_performance</span>(m_without_W,m_with_W, m_with_Y) <span class="sc">%&gt;%</span> </span>
 <span id="cb77-3"><a href="因果ダイアグラムの因果推論への応用.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb77-4"><a href="因果ダイアグラムの因果推論への応用.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">8</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-5"><a href="因果ダイアグラムの因果推論への応用.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
+<span id="cb77-5"><a href="因果ダイアグラムの因果推論への応用.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Name</th>
-<th align="left">R2</th>
+<th align="right">R2</th>
 <th align="right">R2_adjusted</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">m_without_W</td>
-<td align="left">0.16</td>
-<td align="right">0.16</td>
+<td align="right">0.1559857</td>
+<td align="right">0.1559012</td>
 </tr>
 <tr class="even">
 <td align="left">m_with_W</td>
-<td align="left">0.16</td>
-<td align="right">0.16</td>
+<td align="right">0.1560372</td>
+<td align="right">0.1558684</td>
 </tr>
 <tr class="odd">
 <td align="left">m_with_Y</td>
-<td align="left">0.34</td>
-<td align="right">0.34</td>
+<td align="right">0.3449176</td>
+<td align="right">0.3447865</td>
 </tr>
 </tbody>
 </table>
@@ -1210,67 +1152,49 @@ Y = a + bX + cZ_1 + dZ_3 + eW
 \]</span>
 実際、モデルから生成したデータを用いて分析すると<span class="math inline">\(X\)</span>の係数はほぼ0になる。</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="因果ダイアグラムの因果推論への応用.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">+</span> Z2 <span class="sc">+</span> Z3 <span class="sc">+</span> W, <span class="at">data =</span> d_prac3) <span class="sc">%&gt;%</span> </span>
-<span id="cb79-2"><a href="因果ダイアグラムの因果推論への応用.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb79-3"><a href="因果ダイアグラムの因果推論への応用.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
-<table style="width:100%;">
-<colgroup>
-<col width="16%" />
-<col width="18%" />
-<col width="14%" />
-<col width="26%" />
-<col width="12%" />
-<col width="11%" />
-</colgroup>
+<span id="cb79-2"><a href="因果ダイアグラムの因果推論への応用.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span>   </span>
+<span id="cb79-3"><a href="因果ダイアグラムの因果推論への応用.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb79-4"><a href="因果ダイアグラムの因果推論への応用.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb79-5"><a href="因果ダイアグラムの因果推論への応用.html#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
+<table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(9995)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">-8.72e-04</td>
-<td align="center">5.49e-03</td>
-<td align="center">(-0.01, 9.88e-03)</td>
-<td align="center">-0.16</td>
+<td align="center">-0.001</td>
+<td align="center">0.005</td>
 <td align="center">0.874</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">4.11e-03</td>
-<td align="center">7.07e-03</td>
-<td align="center">(-9.76e-03, 0.02)</td>
-<td align="center">0.58</td>
+<td align="center">0.004</td>
+<td align="center">0.007</td>
 <td align="center">0.561</td>
 </tr>
 <tr class="odd">
 <td align="left">Z2</td>
-<td align="center">0.40</td>
-<td align="center">6.06e-03</td>
-<td align="center">(0.39, 0.41)</td>
-<td align="center">66.10</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.401</td>
+<td align="center">0.006</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">Z3</td>
-<td align="center">0.39</td>
-<td align="center">7.17e-03</td>
-<td align="center">(0.38, 0.41)</td>
-<td align="center">54.79</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.393</td>
+<td align="center">0.007</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">W</td>
-<td align="center">0.40</td>
-<td align="center">6.01e-03</td>
-<td align="center">(0.39, 0.41)</td>
-<td align="center">66.42</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.399</td>
+<td align="center">0.006</td>
+<td align="center">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -1312,66 +1236,48 @@ W = a + bX + cZ_1 + dZ_2 + eZ_3
 \]</span></p>
 <p>実際、モデルから生成したデータを用いて分析すると<span class="math inline">\(Z_1, Z_2, Z_3\)</span>の係数はほぼ0になる。</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="因果ダイアグラムの因果推論への応用.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(W <span class="sc">~</span> X <span class="sc">+</span> Z1 <span class="sc">+</span> Z2 <span class="sc">+</span> Z3, <span class="at">data =</span> d_prac3) <span class="sc">%&gt;%</span> </span>
-<span id="cb84-2"><a href="因果ダイアグラムの因果推論への応用.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb84-3"><a href="因果ダイアグラムの因果推論への応用.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_md</span>()</span></code></pre></div>
-<table style="width:100%;">
-<colgroup>
-<col width="16%" />
-<col width="18%" />
-<col width="14%" />
-<col width="26%" />
-<col width="12%" />
-<col width="11%" />
-</colgroup>
+<span id="cb84-2"><a href="因果ダイアグラムの因果推論への応用.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_parameters</span>() <span class="sc">%&gt;%</span>   </span>
+<span id="cb84-3"><a href="因果ダイアグラムの因果推論への応用.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb84-4"><a href="因果ダイアグラムの因果推論への応用.html#cb84-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-5"><a href="因果ダイアグラムの因果推論への応用.html#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">&quot;lccc&quot;</span>)</span></code></pre></div>
+<table>
 <thead>
 <tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
 <th align="center">SE</th>
-<th align="center">95% CI</th>
-<th align="center">t(9995)</th>
 <th align="center">p</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="center">7.74e-04</td>
-<td align="center">9.13e-03</td>
-<td align="center">(-0.02, 0.02)</td>
-<td align="center">0.08</td>
+<td align="center">0.001</td>
+<td align="center">0.009</td>
 <td align="center">0.932</td>
 </tr>
 <tr class="even">
 <td align="left">X</td>
-<td align="center">0.38</td>
-<td align="center">0.01</td>
-<td align="center">(0.36, 0.41)</td>
-<td align="center">31.18</td>
-<td align="center">&lt; .001</td>
+<td align="center">0.383</td>
+<td align="center">0.012</td>
+<td align="center">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">Z1</td>
-<td align="center">5.47e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.02, 0.03)</td>
-<td align="center">0.48</td>
+<td align="center">0.005</td>
+<td align="center">0.011</td>
 <td align="center">0.629</td>
 </tr>
 <tr class="even">
 <td align="left">Z2</td>
-<td align="center">0.02</td>
-<td align="center">0.01</td>
-<td align="center">(-1.08e-03, 0.04)</td>
-<td align="center">1.86</td>
+<td align="center">0.019</td>
+<td align="center">0.010</td>
 <td align="center">0.064</td>
 </tr>
 <tr class="odd">
 <td align="left">Z3</td>
-<td align="center">-7.11e-03</td>
-<td align="center">0.01</td>
-<td align="center">(-0.03, 0.02)</td>
-<td align="center">-0.59</td>
+<td align="center">-0.007</td>
+<td align="center">0.012</td>
 <td align="center">0.558</td>
 </tr>
 </tbody>
