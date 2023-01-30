@@ -580,6 +580,7 @@ adjustmentSets(dagified_prac34,
                outcome = "Y",
                type = "minimal")
 ```
+<br/>  
 
 > 2. $D$と$W$から$Y$への因果効果を推定するために、バックドア基準を満たす最小の変数の集合をあげよ。  
 
@@ -592,6 +593,7 @@ adjustmentSets(dagified_prac34,
                outcome = "Y",
                type = "minimal")
 ```
+<br/>  
 
 > 3. このグラフにおいて、$X$と$Y$以外に観測可能な変数が1つのみだとする。このとき、$X$から$Y$への因果効果を推定するには、どの変数を計測すればよいか。  
 
