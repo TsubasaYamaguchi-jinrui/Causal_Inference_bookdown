@@ -1,6 +1,8 @@
 # 本稿の目的  
 本稿では、統計的因果推論の理論とRでの実装についてまとめる。統計的因果推論には大きく分けて潜在的結果変数の枠組みを用いる**Rubin流**(例えば、星野, 2009; 高橋, 2012)と**構造的因果モデル(SCM: Structual Causal Model)**と**因果ダイアグラム(もしくはグラフィカルモデル)**を用いる**Pearl流**に分けられる。本稿では、主に後者に焦点を当てて解説を行う。  
 
+本文は[こちらから](https://tsubasayamaguchi-jinrui.github.io/Causal_Inference_bookdown/)。  
+
 参考にした書籍やウェブサイトは、以下のものである。  
 
 - Causal inference in statistics: A primer (邦訳「入門統計的因果推論」)(Pearl et al. 2016)  
